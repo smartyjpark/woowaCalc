@@ -1,0 +1,105 @@
+body {
+  padding-top: 100px;
+  padding-left: 100px;
+  padding-right: 50px;
+
+  font-family: monospace;
+  font-size: 2em;
+}
+
+#app {
+  width: 30em;
+}
+
+header + p {
+  color: #555;
+}
+
+nav {
+  margin-top: 3em;
+}
+
+ul {
+  padding-left: 1em;
+}
+
+ul li {
+  font-size: 0.7em;
+  margin-bottom: 0.6em;
+}
+
+footer {
+  margin-top: 3em;
+  font-size: 0.7em;
+  color: #888;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+pre {
+  font-weight: lighter;
+  font-size: 0.7em;
+  background: #f0f0f0;
+}
+
+a {
+  color: black;
+  padding: 2px 2px 2px 2px;
+  text-decoration: none;
+}
+
+a.active {
+  border-bottom: 3px solid #2ac1bc;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;  
+}
+
+.calc {
+  width: 400px;
+  height: auto;
+  border: solid 1px #888888;
+  border-radius: 2%;
+}
+
+.calc-monitor {
+  width: 380px;
+  margin: auto;
+}
+
+.calc > .calc-row {
+  display: flex;
+}
+
+.ans-monitor {
+  height: 20px;
+  color: #888888;
+  font-size: 20px;
+}
+
+.input-monitor {
+  min-height: 50px;
+  border: solid 1px #888888;
+  line-height: 50px;
+  text-align: right;
+  font-size: 30px;
+  word-wrap: break-word;
+}
+
+.input-monitor > span{
+  margin: 10px;
+}
+
+.calc-row > .btn {
+  width: 80px;
+  height: 40px;
+  margin: 10px auto 10px auto;
+}
