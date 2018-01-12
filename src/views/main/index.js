@@ -1,61 +1,52 @@
 import Woowahan from 'woowahan';
 import template from './index.handlebars';
-import {CalcView} from '../calc'
 
 export const Main = Woowahan.View.create('Main', {
   template,
+
   events: {
     "click .btn": "onClickButton"
   },
 
   initialize() {
-    this.earlyModel = {
-      time: new Date(),
-      currData: "",
+    const model = {
+      currentData: "",
       ansData: "",
       isAns: false,
-      howManyOpend : 0
+      howManyOpened : 0
     };
-    this.setModel(this.earlyModel);
+    this.setModel(model);
     this.lastInput = "";
     this.lastNumber = "";
     this.super()
   },
 
-  viewWillMount(renderData) {
+  viewWillMount(renderData){
 
-    return renderData;
-  },
-
-  viewDidMount() {
-
-    this.updateView('[data-ref=calcViewContainer]', CalcView)
-  },
-
-  viewWillUnmount() {
-
+    return renderData
   },
 
   saveAndUpdate(model) {
     this.setModel(model);
-    this.updateView('[data-ref=calcViewContainer]', CalcView, this.getModel())
+    this.updateView()
   },
 
   insertValue(value) {
     const model = this.getModel();
 
-    if((this.isInteger(this.lastInput)) && (model.isAns || model.currData === '0')) {
-      model.currData = "";
+    if((this.isInteger(this.lastInput)) && (model.isAns || model.currentData === '0')) {
+      model.currentData = "";
     }
 
-    model.currData += value;
+    model.currentData += value;
     model.isAns = false;
     this.saveAndUpdate(model)
   },
 
   onClickButton(event) {
-    const target = event.target;
-    const value = target.dataset.value.toString();
+    const target = event.currentTarget;
+    const value = target.dataset.value;
+
     switch (target.dataset.ref) {
       case 'number' :
         this.inputNumber(value);
@@ -70,16 +61,24 @@ export const Main = Woowahan.View.create('Main', {
   },
 
   inputNumber(number) {
-    if(this.lastInput === ')') return;
+    if(this.lastInput === ')') {
+      return;
+    }
+
     this.lastInput = number;
-    if(!(this.getModel('currData') === "0")) this.lastNumber += number;
+
+    if(!(this.getModel('currentData') === "0")) {
+      this.lastNumber += number;
+    }
+
     this.insertValue(number)
   },
 
   runOperator(operator) {
     if (!this.isInteger(this.lastInput)
       && operator !== '-'
-      && this.lastInput !== ')') return false;
+      && this.lastInput !== ')') return;
+
     this.lastInput = operator;
     this.lastNumber = "";
     this.insertValue(operator);
@@ -89,23 +88,27 @@ export const Main = Woowahan.View.create('Main', {
     const model = this.getModel();
     switch (funcName) {
       case "=":
-        const currData = this.getModel().currData;
-        if (currData === '') return;
-        const returnValue = eval(currData).toString();
-        if (returnValue) this.getResultValue(returnValue);
+        const currentData = this.getModel().currentData;
+        if (currentData === '') return;
+
+        try {
+          const returnValue = eval(currentData).toString();
+
+          if (returnValue) this.getResultValue(returnValue);
+        } catch (error) { console.log(error); }
         break;
 
       case "CE":
         if (model.isAns) {
           model.isAns = false;
-          model.currData = '';
+          model.currentData = '';
           this.lastNumber = '';
           this.lastInput = '';
           this.saveAndUpdate(model);
           return;
         }
-        model.currData = model.currData.slice(0, -1);
-        this.lastInput = model.currData[model.currData.length - 1];
+        model.currentData = model.currentData.slice(0, -1);
+        this.lastInput = model.currentData[model.currentData.length - 1];
         this.saveAndUpdate(model);
         break;
 
@@ -114,18 +117,18 @@ export const Main = Woowahan.View.create('Main', {
           || this.lastInput === (')' || '.')) return;
         this.lastInput = funcName;
         this.lastNumber = '';
-        model.currData += funcName;
-        model.howManyOpend ++;
+        model.currentData += funcName;
+        model.howManyOpened ++;
         this.saveAndUpdate(model);
         break;
 
       case ")":
-        if(model.howManyOpend === 0
+        if(model.howManyOpened === 0
           || !this.isInteger(this.lastInput)) return;
         this.lastInput = funcName;
         this.lastNumber = '';
-        model.currData += funcName;
-        model.howManyOpend --;
+        model.currentData += funcName;
+        model.howManyOpened --;
         this.saveAndUpdate(model);
         break;
 
@@ -141,11 +144,11 @@ export const Main = Woowahan.View.create('Main', {
 
   getResultValue(value) {
     const model = this.getModel();
-    model.currData = value.toString();
-    model.ansData = model.currData;
+    model.currentData = value.toString();
+    model.ansData = model.currentData;
     model.isAns = true;
     this.saveAndUpdate(model);
-    this.lastNumber = model.currData;
+    this.lastNumber = model.currentData;
     this.lastInput = this.lastNumber[this.lastNumber.length - 1];
     this.setModel(model);
   },

@@ -5,17 +5,12 @@ import * as views from './views';
 global.$ = global.jQuery = Woowahan.$;
 
 const app = new Woowahan();
-const routeConfig = [{
+const routeConfig = {
   url: '/',
   view: views.Main,
   container: '.contents',
   layout: 'DefaultLayout'
-},{
-  url: '/test',
-  view: views.Test,
-  container: '.contents',
-  layout: 'DefaultLayout'
-}];
+};
 
 app.start(routeConfig);
 

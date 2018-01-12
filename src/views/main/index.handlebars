@@ -1,7 +1,53 @@
 <div class="main-content">
-  
-  <h3>현재시간 : {{time}}</h3>
 
-  <div class="calc-wrapper" data-ref="calcViewContainer"></div>
+  <div class="calc-wrapper" data-ref="calcViewContainer">
+    <div class="calc">
+
+      <div class="calc-monitor">
+        <div class="ans-monitor">
+          {{#if ansData}}
+            <span>ANS : {{ansData}}</span>
+          {{/if}}
+        </div>
+        <div class="input-monitor">
+          {{#if currData}}
+            <span>{{currData}}</span>
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="calc-row calc-row-1">
+        <button class="btn btn-func" data-ref="func" data-value="(">(</button>
+        <button class="btn btn-func" data-ref="func" data-value=")">)</button>
+        <button class="btn btn-func" data-ref="operator" data-value="%">%</button>
+        <button class="btn btn-func" data-ref="func" data-value="CE">{{#if isAns}}AC{{else}}CE{{/if}}</button>
+      </div>
+      <div class="calc-row calc-row-2">
+        <button class="btn btn-number" data-ref="number" data-value="7">7</button>
+        <button class="btn btn-number" data-ref="number" data-value="8">8</button>
+        <button class="btn btn-number" data-ref="number" data-value="9">9</button>
+        <button class="btn btn-func" data-ref="operator" data-value="/">/</button>
+      </div>
+      <div class="calc-row calc-row-3">
+        <button class="btn btn-number" data-ref="number" data-value="4">4</button>
+        <button class="btn btn-number" data-ref="number" data-value="5">5</button>
+        <button class="btn btn-number" data-ref="number" data-value="6">6</button>
+        <button class="btn btn-func" data-ref="operator" data-value="*">*</button>
+      </div>
+      <div class="calc-row calc-row-4">
+        <button class="btn btn-number" data-ref="number" data-value="1">1</button>
+        <button class="btn btn-number" data-ref="number" data-value="2">2</button>
+        <button class="btn btn-number" data-ref="number" data-value="3">3</button>
+        <button class="btn btn-func" data-ref="operator" data-value="-">-</button>
+      </div>
+      <div class="calc-row clac-row-5">
+        <button class="btn btn-number" data-ref="number" data-value="0">0</button>
+        <button class="btn btn-func" data-ref="func" data-value=".">.</button>
+        <button class="btn btn-func btn-equal" data-ref="func" data-value="=">=</button>
+        <button class="btn btn-func" data-ref="operator" data-value="+">+</button>
+      </div>
+
+    </div>
+  </div>
 
 </div>
